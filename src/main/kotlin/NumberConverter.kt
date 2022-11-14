@@ -10,15 +10,16 @@ open class NumberConverter {
                 1 -> convertedValue = russianUnitsRepresent(number)
                 2 -> convertedValue = defineTwoDigitNumber(number)
                 3 -> convertedValue = "${russianHundredsRepresent(number.toString()[0].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(1).toInt())}"
-                4 -> convertedValue = "${russianUnitsThousandRepresent(number.toString()[0].digitToInt())} ${russianThousandSyntax(number.toString()[0].digitToInt())} ${russianHundredsRepresent(number.toString()[1].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(2).toInt())}"
+                4 -> convertedValue = defineFourDigitNumber(number)
                 5 -> convertedValue = defineFiveDigitNumber(number)
-                6 -> convertedValue = "${russianHundredsRepresent(number.toString()[0].digitToInt())} ${defineFiveDigitNumber(number.toString().substring(1).toInt())}"
+                6 -> convertedValue = defineSixDigitNumber(number)
             }
 
             return convertedValue
         }
 
         private fun defineTwoDigitNumber(number: Int): String {
+            if (number.toString().length == 1) return russianUnitsRepresent(number)
             var convertedPiece: String
             convertedPiece = russianDozensRepresent(number)
             if (convertedPiece == none)
@@ -26,14 +27,36 @@ open class NumberConverter {
             return convertedPiece
         }
 
+        private fun defineFourDigitNumber(number: Int): String {
+            return "${russianUnitsThousandRepresent(number.toString()[0].digitToInt())}${russianThousandSyntax(number.toString()[0].digitToInt())}${russianHundredsRepresent(number.toString()[1].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(2).toInt())}"
+        }
+
         private fun defineFiveDigitNumber(number: Int): String {
-            var convertedPiece = russianDozensRepresent(number.toString().substring(0, 1).toInt())
-            val syntaxPiece = if (convertedPiece == none) "тысяч"
+            val syntaxPiece = if (number.toString().substring(0, 2).toInt() in 10..19) " тысяч "
             else russianThousandSyntax(number.toString()[1].digitToInt())
 
-            convertedPiece = "${defineTwoDigitNumber(number.toString().substring(0, 2).toInt())} $syntaxPiece ${russianHundredsRepresent(number.toString()[2].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(3).toInt())}"
+            return " ${defineTwoDigitNumber(number.toString().substring(0, 2).toInt())}$syntaxPiece${russianHundredsRepresent(number.toString()[2].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(3).toInt())}"
+        }
 
-            return convertedPiece
+        private fun defineSixDigitNumber(number: Int): String {
+            val convertedStartPiece = russianHundredsRepresent(number.toString()[0].digitToInt())
+
+            val syntaxPiece = if (number.toString().substring(1, 3).toInt() in 10..19 || number.toString().substring(1, 3).toInt() == 0) " тысяч "
+            else russianThousandSyntax(number.toString()[2].digitToInt())
+
+            var convertedEndPiece = none
+
+            val secondPieceValue = number.toString().substring(1).toInt()
+
+            when(secondPieceValue.toString().length) {
+                1 -> convertedEndPiece = "$syntaxPiece${russianUnitsRepresent(secondPieceValue)}"
+                2 -> convertedEndPiece =  "$syntaxPiece${defineTwoDigitNumber(secondPieceValue)}"
+                3 -> convertedEndPiece = "$syntaxPiece${russianHundredsRepresent(secondPieceValue.toString()[0].digitToInt())} ${defineTwoDigitNumber(secondPieceValue.toString().substring(1).toInt())}"
+                4 -> convertedEndPiece = " ${defineFourDigitNumber(secondPieceValue)}"
+                5 -> convertedEndPiece = " ${defineTwoDigitNumber(number.toString().substring(1, 3).toInt())}$syntaxPiece${russianHundredsRepresent(number.toString()[3].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(4).toInt())}"
+            }
+
+            return "$convertedStartPiece$convertedEndPiece"
         }
 
         private fun russianUnitsRepresent(number: Int): String {
@@ -61,15 +84,16 @@ open class NumberConverter {
 
         private fun russianThousandSyntax(number: Int): String {
             when(number) {
-                1 -> return "тысяча"
-                2 -> return "тысячи"
-                3 -> return "тысячи"
-                4 -> return "тысячи"
-                5 -> return "тысяч"
-                6 -> return "тысяч"
-                7 -> return "тысяч"
-                8 -> return "тысяч"
-                9 -> return "тысяч"
+                0 -> return " тысяч "
+                1 -> return " тысяча "
+                2 -> return " тысячи "
+                3 -> return " тысячи "
+                4 -> return " тысячи "
+                5 -> return " тысяч "
+                6 -> return " тысяч "
+                7 -> return " тысяч "
+                8 -> return " тысяч "
+                9 -> return " тысяч "
             }
             return none
         }
