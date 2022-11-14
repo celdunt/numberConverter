@@ -48,7 +48,7 @@ open class NumberConverter {
                 8 -> return "восемь"
                 9 -> return "девять"
             }
-            return ""
+            return none
         }
 
         private fun russianUnitsThousandRepresent(number: Int): String {
@@ -71,7 +71,7 @@ open class NumberConverter {
                 8 -> return "тысяч"
                 9 -> return "тысяч"
             }
-            return ""
+            return none
         }
 
         private fun russianDozensRepresent(number: Int): String {
@@ -95,7 +95,7 @@ open class NumberConverter {
                 80 -> return "восемьдесят"
                 90 -> return "девяносто"
             }
-            return ""
+            return none
         }
 
         private fun russianHundredsRepresent(number: Int): String {
@@ -110,7 +110,7 @@ open class NumberConverter {
                 8 -> return "восемьсот"
                 9 -> return "девятьсот"
             }
-            return ""
+            return none
         }
     }
 }
