@@ -35,7 +35,7 @@ open class NumberConverter {
             val syntaxPiece = if (number.toString().substring(0, 2).toInt() in 10..19) " тысяч "
             else russianThousandSyntax(number.toString()[1].digitToInt())
 
-            return " ${defineTwoDigitNumber(number.toString().substring(0, 2).toInt())}$syntaxPiece${russianHundredsRepresent(number.toString()[2].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(3).toInt())}"
+            return "${defineTwoDigitNumber(number.toString().substring(0, 2).toInt())}$syntaxPiece${russianHundredsRepresent(number.toString()[2].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(3).toInt())}"
         }
 
         private fun defineSixDigitNumber(number: Int): String {
