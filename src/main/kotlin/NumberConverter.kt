@@ -32,8 +32,7 @@ open class NumberConverter {
         }
 
         private fun defineFiveDigitNumber(number: Int): String {
-            val syntaxPiece = if (number.toString().substring(0, 2).toInt() in 10..19) " тысяч "
-            else russianThousandSyntax(number.toString()[1].digitToInt())
+            val syntaxPiece = russianThousandSyntax(number.toString().substring(0, 2).toInt())
 
             return "${defineTwoDigitNumber(number.toString().substring(0, 2).toInt())}$syntaxPiece${russianHundredsRepresent(number.toString()[2].digitToInt())} ${defineTwoDigitNumber(number.toString().substring(3).toInt())}"
         }
@@ -41,8 +40,7 @@ open class NumberConverter {
         private fun defineSixDigitNumber(number: Int): String {
             val convertedStartPiece = russianHundredsRepresent(number.toString()[0].digitToInt())
 
-            val syntaxPiece = if (number.toString().substring(1, 3).toInt() in 10..19 || number.toString().substring(1, 3).toInt() == 0) " тысяч "
-            else russianThousandSyntax(number.toString()[2].digitToInt())
+            val syntaxPiece = russianThousandSyntax(number.toString().substring(1, 3).toInt())
 
             var convertedEndPiece = none
 
@@ -83,19 +81,10 @@ open class NumberConverter {
         }
 
         private fun russianThousandSyntax(number: Int): String {
-            when(number) {
-                0 -> return " тысяч "
-                1 -> return " тысяча "
-                2 -> return " тысячи "
-                3 -> return " тысячи "
-                4 -> return " тысячи "
-                5 -> return " тысяч "
-                6 -> return " тысяч "
-                7 -> return " тысяч "
-                8 -> return " тысяч "
-                9 -> return " тысяч "
-            }
-            return none
+            return if (number in 10..19) " тысяч "
+            else if (number.toString()[number.toString().length-1].digitToInt() in 2..4) " тысячи "
+            else if (number.toString()[number.toString().length-1].digitToInt() == 1) " тысяча "
+            else " тысяч "
         }
 
         private fun russianDozensRepresent(number: Int): String {
