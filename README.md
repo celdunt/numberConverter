@@ -8,9 +8,10 @@
 ### Демонстрация работы. 
 
 
-![Снимок экрана 2022-11-15 в 01 39 04](https://user-images.githubusercontent.com/107755206/201783014-faa2fefa-d9b1-4b8b-a916-78606bdfaac7.png)  
+
+![Снимок экрана 2022-11-15 в 09 16 11](https://user-images.githubusercontent.com/107755206/201840911-ad0dccc3-016e-430e-9dd9-915c21ea79b6.png)  
 Рисунок 1 -- Входные данные
 
 
-![Снимок экрана 2022-11-15 в 01 40 13](https://user-images.githubusercontent.com/107755206/201783142-bb79d349-9afc-4133-a137-075685ff5bba.png)  
+![Снимок экрана 2022-11-15 в 09 17 07](https://user-images.githubusercontent.com/107755206/201841005-ab919e06-7124-4e6b-9d9b-dfe4387697e3.png)  
 Рисунок 2 -- Результат
